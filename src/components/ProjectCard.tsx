@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { ExternalLink, Github } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface Project {
   id: number;
@@ -91,16 +90,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
             transition={{ duration: 0.7 }}
             className="w-full h-full"
           >
-            <ImageWithFallback
+            {/* FIX: Använder vanlig img-tagg för att läsa direkt från public-mappen */}
+            <img
               src={project.image}
               alt={project.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                // Enkel fallback om bilden mot förmodan inte hittas
+                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Bild+saknas';
+              }}
             />
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
           </motion.div>
 
-          {/* Subtle overlay on hover */}
           <motion.div
             animate={{
               opacity: isHovered ? 0.5 : 0,
@@ -164,7 +167,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
 
-        {/* Scan line effect - more subtle */}
         <motion.div
           animate={{
             y: isHovered ? ['-100%', '100%'] : '-100%',
