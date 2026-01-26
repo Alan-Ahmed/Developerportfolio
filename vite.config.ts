@@ -3,13 +3,12 @@ import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
 export default defineConfig({
-  // Anger att bas-sökvägen är relativ så att filer hittas på GitHub Pages
-  base: './', 
+  // Vi ändrar från './' till namnet på ditt repo för att tvinga rätt sökvägar på GitHub Pages
+  base: '/Developerportfolio/', 
   plugins: [react()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
-      // Behåll biblioteks-alias som behövs för dina komponenter
       'vaul@1.1.2': 'vaul',
       'sonner@2.0.3': 'sonner',
       'recharts@2.15.2': 'recharts',
@@ -48,13 +47,11 @@ export default defineConfig({
       '@radix-ui/react-aspect-ratio@1.1.2': '@radix-ui/react-aspect-ratio',
       '@radix-ui/react-alert-dialog@1.1.6': '@radix-ui/react-alert-dialog',
       '@radix-ui/react-accordion@1.2.3': '@radix-ui/react-accordion',
-      // Standard-alias för src-mappen
       '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
     target: 'esnext',
-    // Viktigt: Se till att denna matchar "path" i din deploy.yml
     outDir: 'dist', 
   },
   server: {
