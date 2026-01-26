@@ -2,10 +2,8 @@ import { motion } from 'motion/react';
 import { useInView } from './hooks/useInView';
 import { ProjectCard } from './ProjectCard';
 
-// HÄR FIXAR VI IMPORTERNA: Vi pekar direkt på mappen src/assets istället för "figma:asset"
-import burnerIdImage from '../assets/5c2b99e35359b7a1619e2940f688236cb3545f2d.png';
-import cafe45Image from '../assets/8ebb24853f92853a4130adbef0407ff85dd7132f.png';
-import cipherStoreImage from '../assets/bdf6735bba1dcef0595c86f23b52c98592c68f2f.png';
+// NOTERA: Vi har tagit bort alla 'import ... from assets' härifrån.
+// När bilderna ligger i public-mappen anropas de direkt via sitt filnamn.
 
 const projects = [
   {
@@ -14,7 +12,7 @@ const projects = [
     description: 'En säkerhetsfokuserad tjänst för generering av temporära identiteter. Minimerar digital exponering genom automatiserad hantering av engångsprofiler och anonyma credentials.',
     technologies: ['Node.js', '.NET 8', 'Redis', 'AES-256', 'OAuth2', 'Docker'],
     liveUrl: 'https://luxury-bublanina-733452.netlify.app/',
-    image: burnerIdImage,
+    image: '5c2b99e35359b7a1619e2940f688236cb3545f2d.png', // Direktlänk till filen i public
     accentColor: '#14b8a6',
   },
   {
@@ -23,7 +21,7 @@ const projects = [
     description: 'Ett integrerat affärssystem för caféverksamhet med realtidshantering av beställningar och lagerstatus.',
     technologies: ['React', '.NET 8', 'Supabase', 'PostgreSQL', 'Netlify', 'Tailwind CSS'],
     liveUrl: 'https://cafe45.se/',
-    image: cafe45Image,
+    image: '8ebb24853f92853a4130adbef0407ff85dd7132f.png', // Direktlänk till filen i public
     accentColor: '#14b8a6',
   },
   {
@@ -33,7 +31,7 @@ const projects = [
     technologies: ['React', '.NET 8', 'Stripe API', 'EF Core', 'SQL Server', 'xUnit'],
     githubUrl: 'https://github.com/Alan-Ahmed/CipherStore.git',
     liveUrl: 'https://github.com/Alan-Ahmed/CipherStore.git',
-    image: cipherStoreImage,
+    image: 'bdf6735bba1dcef0595c86f23b52c98592c68f2f.png', // Direktlänk till filen i public
     accentColor: '#14b8a6',
   },
 ];
