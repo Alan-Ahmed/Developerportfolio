@@ -1,9 +1,10 @@
-
-  import { defineConfig } from 'vite';
+import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
   export default defineConfig({
+    // Denna rad är superviktig för GitHub Pages!
+    base: './', 
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -55,7 +56,8 @@
     },
     build: {
       target: 'esnext',
-      outDir: 'build',
+      // Ändrad från 'build' till 'dist' för att matcha din YAML-fil
+      outDir: 'dist', 
     },
     server: {
       port: 3000,
