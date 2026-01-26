@@ -1,8 +1,8 @@
-name: Deploy React to GitHub Pages
+name: Deploy React (Vite)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ] # Se till att din huvudgren heter main
 
 permissions:
   contents: read
@@ -20,7 +20,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -31,7 +30,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Om du har Vite. Om det misslyckas, ändra till ./build
+          # Vi ändrade outDir till 'dist' i din vite.config.ts tidigare
+          path: ./dist 
 
       - name: Deploy to GitHub Pages
         id: deployment
