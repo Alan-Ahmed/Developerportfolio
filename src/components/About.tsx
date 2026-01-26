@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
 import { useInView } from './hooks/useInView';
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import alanImage from 'figma:asset/e8de0b64c271dbb9e4c5b70b7ecc24031de5766e.png';
+
+// FIX: Vi pekar direkt på assets-mappen istället för figma:asset
+import alanImage from '../assets/e8de0b64c271dbb9e4c5b70b7ecc24031de5766e.png';
 
 export function About() {
   const { ref, isInView } = useInView({ threshold: 0.2 });
@@ -28,7 +29,8 @@ export function About() {
               
               {/* Image container */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden border border-teal-500/20 group-hover:border-teal-400/40 transition-colors duration-700">
-                <ImageWithFallback
+                {/* FIX: Använder vanlig img-tagg istället för ImageWithFallback */}
+                <img
                   src={alanImage}
                   alt="Developer portrait"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
@@ -59,7 +61,7 @@ export function About() {
                 </h2>
               </div>
 
-              <h3 className="text-2xl font-semibold text-gray-200 font-bold">
+              <h3 className="text-2xl font-semibold text-gray-200">
                 Alan Ahmed
               </h3>
 
