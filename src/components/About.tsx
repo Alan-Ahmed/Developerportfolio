@@ -21,18 +21,19 @@ export function About() {
             className="relative group"
           >
             <div className="relative w-full aspect-square max-w-md mx-auto">
+              {/* Glowing border effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/20 to-cyan-500/10 rounded-2xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-700" />
               
+              {/* Image container */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden border border-teal-500/20 group-hover:border-teal-400/40 transition-colors duration-700">
-                {/* HÄR ÄR FIXEN: 
-                   Vi använder BASE_URL för att tvinga fram rätt sökväg på GitHub Pages.
-                */}
+                {/* FIX: Vi använder BASE_URL och pekar på .jpg-filen i public-mappen */}
                 <img
-                  src={`${import.meta.env.BASE_URL}e8de0b64c271dbb9e4c5b70b7ecc24031de5766e.png`}
+                  src={`${import.meta.env.BASE_URL}e8de0b64c271dbb9e4c5b70b7ecc24031de5766e.jpg`}
                   alt="Alan Ahmed - Developer portrait"
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                 />
                 
+                {/* Subtle overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
             </div>
