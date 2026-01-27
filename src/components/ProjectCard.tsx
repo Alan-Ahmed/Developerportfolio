@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'; // Ändrade till framer-motion då det är standard
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 
 interface Project {
@@ -29,7 +29,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const mouseXSpring = useSpring(x, { stiffness: 250, damping: 35 });
   const mouseYSpring = useSpring(y, { stiffness: 250, damping: 35 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['7deg', '-7deg']);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['5deg', '-5deg']);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-7deg', '7deg']);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -64,63 +64,73 @@ export function ProjectCard({ project }: ProjectCardProps) {
       style={{
         rotateX,
         rotateY,
-        perspective: '1000px',
         transformStyle: 'preserve-3d',
+        perspective: '1000px'
       }}
       className="relative h-full group cursor-pointer"
     >
-      {/* Glow effect bakom kortet */}
+      {/* Glow effect */}
       <motion.div
         animate={{
           opacity: isHovered ? 0.6 : 0,
-          scale: isHovered ? 1.05 : 1,
+          scale: isHovered ? 1.02 : 1,
         }}
         transition={{ duration: 0.5 }}
-        className="absolute -inset-1 bg-gradient-to-r from-teal-500/30 via-cyan-500/30 to-teal-500/30 rounded-2xl blur-2xl"
-        style={{ transform: 'translateZ(-10px)' }}
+        className="absolute -inset-1 bg-gradient-to-r from-teal-500/20 via-cyan-500/20 to-teal-500/20 rounded-2xl blur-xl"
+        style={{ transform: 'translateZ(-50px)' }}
       />
 
       {/* Card container */}
-      <div className="relative h-full bg-[#0a0a0a] rounded-2xl border border-teal-500/20 group-hover:border-teal-400/50 transition-all duration-700 overflow-hidden shadow-2xl">
-        
+      <div className="relative h-full bg-gradient-to-br from-[#0f0f0f] to-[#0a0a0a] rounded-2xl border border-teal-500/20 group-hover:border-teal-400/40 transition-all duration-700 overflow-hidden">
         {/* Image preview */}
         <div className="relative h-48 overflow-hidden">
           <motion.div
             animate={{
-              scale: isHovered ? 1.1 : 1,
+              scale: isHovered ? 1.08 : 1,
             }}
             transition={{ duration: 0.7 }}
             className="w-full h-full"
           >
+            {/* ÄNDRING: Vi använder nu en standard img för att garantera att bilderna från public laddas */}
             <img
               src={project.image}
               alt={project.name}
               className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Bild+saknas';
+                // Fallback om sökvägen är fel
+                (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Image+Not+Found';
               }}
             />
-            {/* Gradient overlay på bilden */}
+            {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
           </motion.div>
+
+          {/* Subtle overlay on hover */}
+          <motion.div
+            animate={{
+              opacity: isHovered ? 0.5 : 0,
+            }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 bg-gradient-to-b from-teal-500/5 to-transparent"
+          />
         </div>
 
-        {/* Content - translateZ ger en "pop-out" effekt vid tilt */}
-        <div className="p-5 space-y-4" style={{ transform: 'translateZ(40px)' }}>
-          <h3 className="text-xl font-bold text-gray-100 group-hover:text-teal-400 transition-colors duration-500">
+        {/* Content */}
+        <div className="p-4 space-y-3" style={{ transform: 'translateZ(50px)' }}>
+          <h3 className="text-lg font-bold text-gray-100 group-hover:text-teal-400 transition-colors duration-500">
             {project.name}
           </h3>
 
-          <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+          <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
             {project.description}
           </p>
 
           {/* Technologies */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {project.technologies.map((tech) => (
               <span
-                key={`${project.id}-${tech}`}
-                className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-bold bg-teal-500/5 text-teal-400 rounded-md border border-teal-500/20"
+                key={tech}
+                className="px-2 py-0.5 text-xs bg-teal-500/10 text-teal-400 rounded border border-teal-500/30"
               >
                 {tech}
               </span>
@@ -128,48 +138,48 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           {/* Action buttons */}
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-2 pt-2">
             {project.githubUrl && (
               <motion.a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg border border-white/10 transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-500/10 hover:bg-teal-500/15 text-teal-400 rounded-lg border border-teal-500/30 hover:border-teal-400/50 transition-all duration-500"
               >
-                <Github className="w-4 h-4" />
-                <span className="text-xs font-bold">Code</span>
+                <Github className="w-3.5 h-3.5" />
+                <span className="text-xs font-semibold">GitHub</span>
               </motion.a>
             )}
 
-            {project.liveUrl && (
+            {project.liveUrl && project.liveUrl !== project.githubUrl && (
               <motion.a
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ y: -2 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-black rounded-lg font-bold transition-all shadow-[0_0_15px_rgba(20,184,166,0.2)]"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-teal-500 hover:bg-teal-600 text-white rounded-lg transition-all duration-500 hover:shadow-[0_0_20px_rgba(20,184,166,0.3)]"
               >
-                <ExternalLink className="w-4 h-4" />
-                <span className="text-xs">Live Demo</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span className="text-xs font-semibold">Öppna</span>
               </motion.a>
             )}
           </div>
         </div>
 
-        {/* Scanline animation (den ljusa linjen som åker över vid hover) */}
+        {/* Scan line effect */}
         <motion.div
           animate={{
-            y: isHovered ? ['-100%', '200%'] : '-100%',
+            y: isHovered ? ['-100%', '100%'] : '-100%',
           }}
           transition={{
-            duration: 2,
+            duration: 2.5,
             repeat: isHovered ? Infinity : 0,
             ease: 'linear',
           }}
-          className="absolute inset-0 bg-gradient-to-b from-transparent via-teal-400/10 to-transparent h-40 pointer-events-none"
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-teal-400/5 to-transparent h-32 pointer-events-none"
         />
       </div>
     </motion.div>
