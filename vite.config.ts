@@ -2,13 +2,18 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  // Vi ändrar från './' till namnet på ditt repo för att tvinga rätt sökvägar på GitHub Pages
+  // Base sätts till ditt reponamn för att GitHub Pages ska hitta rätt mappar
   base: '/Developerportfolio/', 
   plugins: [react()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
+      // Standard-alias för din källkod
+      '@': path.resolve(__dirname, './src'),
+      
+      // Biblioteks-alias för dina komponenter (Behålls för kompatibilitet)
       'vaul@1.1.2': 'vaul',
       'sonner@2.0.3': 'sonner',
       'recharts@2.15.2': 'recharts',
@@ -47,15 +52,18 @@ export default defineConfig({
       '@radix-ui/react-aspect-ratio@1.1.2': '@radix-ui/react-aspect-ratio',
       '@radix-ui/react-alert-dialog@1.1.6': '@radix-ui/react-alert-dialog',
       '@radix-ui/react-accordion@1.2.3': '@radix-ui/react-accordion',
-      '@': path.resolve(__dirname, './src'),
     },
   },
   build: {
     target: 'esnext',
-    outDir: 'dist', 
+    outDir: 'dist',
+    // Genererar källkartor för enklare felsökning (valfritt)
+    sourcemap: false, 
   },
   server: {
     port: 3000,
     open: true,
+    // Fixar problem med routing lokalt
+    historyApiFallback: true, 
   },
 });
