@@ -1,42 +1,45 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useInView } from './hooks/useInView';
-import { Code2, Database, Shield, Boxes, GitBranch, Server, Braces, Key } from 'lucide-react';
+import { Code2, Database, Boxes, GitBranch, Server, Braces, Key } from 'lucide-react';
 
 const technologies = [
-  { name: 'C#', icon: Braces, color: '#14b8a6' },
-  { name: '.NET 8', icon: Code2, color: '#14b8a6' },
-  { name: 'ASP.NET Core Web API', icon: Server, color: '#14b8a6' },
-  { name: 'Clean Architecture', icon: Boxes, color: '#14b8a6' },
-  { name: 'CQRS / MediatR', icon: Boxes, color: '#14b8a6' },
-  { name: 'Entity Framework Core', icon: Database, color: '#14b8a6' },
-  { name: 'SQL Server', icon: Database, color: '#14b8a6' },
-  { name: 'JWT-autentisering', icon: Key, color: '#14b8a6' },
-  { name: 'Git / GitHub', icon: GitBranch, color: '#14b8a6' },
+  { name: 'C#', icon: Braces },
+  { name: '.NET 8', icon: Code2 },
+  { name: 'ASP.NET Core Web API', icon: Server },
+  { name: 'Clean Architecture', icon: Boxes },
+  { name: 'CQRS / MediatR', icon: Boxes },
+  { name: 'Entity Framework Core', icon: Database },
+  { name: 'SQL Server', icon: Database },
+  { name: 'JWT-autentisering', icon: Key },
+  { name: 'Git / GitHub', icon: GitBranch },
 ];
 
 export function TechStack() {
-  const { ref, isInView } = useInView({ threshold: 0.2 });
+  const { ref, isInView } = useInView({ threshold: 0.1 });
 
   return (
-    <section id="tech" ref={ref} className="relative min-h-screen h-screen py-32 px-6 bg-gradient-to-b from-black via-[#0a0a0a] to-black flex items-center justify-center snap-start">
-      <div className="max-w-6xl mx-auto w-full">
+    <section id="tech" ref={ref} className="relative min-h-screen py-32 px-6 bg-black flex items-center justify-center snap-start overflow-hidden">
+      {/* Bakgrunds-glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.05)_0%,_transparent_50%)]" />
+
+      <div className="max-w-6xl mx-auto w-full relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <motion.div
             initial={{ width: 0 }}
             animate={isInView ? { width: '60px' } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="h-1 bg-gradient-to-r from-teal-500 to-transparent mx-auto mb-6"
+            className="h-1 bg-teal-500 mx-auto mb-6"
           />
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-100">
             Tech <span className="text-teal-400">Stack</span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Kärnteknologier som driver mina projekt. Fokus på kvalitet över kvantitet.
+            Kärnteknologier som driver mina projekt. Fokus på robust arkitektur och modern backend.
           </p>
         </motion.div>
 
@@ -46,35 +49,26 @@ export function TechStack() {
             return (
               <motion.div
                 key={tech.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.8, delay: index * 0.08 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative"
               >
-                <div className="group relative h-full">
-                  {/* Glow effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-teal-500/15 to-transparent rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  
-                  {/* Card */}
-                  <div className="relative h-full p-6 bg-gradient-to-br from-[#0f0f0f] to-[#0a0a0a] rounded-xl border border-teal-500/20 group-hover:border-teal-400/40 transition-all duration-700 group-hover:scale-105">
-                    {/* Icon */}
-                    <div className="mb-4 inline-block p-3 bg-teal-500/10 rounded-lg group-hover:bg-teal-500/15 transition-colors duration-500">
-                      <Icon className="w-8 h-8 text-teal-400" strokeWidth={2} />
+                {/* Glow effekt vid hover */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+                
+                <div className="relative p-6 bg-[#0a0a0a] border border-white/5 rounded-xl transition-all duration-500 group-hover:border-teal-500/40">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-teal-500/10 rounded-lg group-hover:bg-teal-500/20 transition-colors">
+                      <Icon className="w-6 h-6 text-teal-400" />
                     </div>
-                    
-                    {/* Tech name */}
-                    <h3 className="text-xl font-semibold text-gray-200 group-hover:text-teal-400 transition-colors duration-500">
+                    <h3 className="text-lg font-semibold text-gray-200 group-hover:text-white transition-colors">
                       {tech.name}
                     </h3>
-                    
-                    {/* Animated line */}
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: '0%' }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.5 }}
-                      className="h-0.5 bg-gradient-to-r from-teal-400 to-transparent mt-3"
-                    />
                   </div>
+                  
+                  {/* Underlinje som animeras fram vid hover */}
+                  <div className="mt-4 h-[1px] w-0 bg-gradient-to-r from-teal-500 to-transparent group-hover:w-full transition-all duration-500" />
                 </div>
               </motion.div>
             );
