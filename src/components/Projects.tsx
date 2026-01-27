@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useInView } from './hooks/useInView';
 import { ProjectCard } from './ProjectCard';
 
+// Vi hämtar bas-URL:en från Vite (t.ex. /Developerportfolio/)
 const base = import.meta.env.BASE_URL;
 
 const projects = [
@@ -11,6 +12,7 @@ const projects = [
     description: 'En säkerhetsfokuserad tjänst för generering av temporära identiteter. Minimerar digital exponering genom automatiserad hantering av engångsprofiler och anonyma credentials.',
     technologies: ['Node.js', '.NET 8', 'Redis', 'AES-256', 'OAuth2', 'Docker'],
     liveUrl: 'https://luxury-bublanina-733452.netlify.app/',
+    // FIX: Matchar .png i din public-mapp
     image: `${base}5c2b99e35359b7a1619e2940f688236cb3545f2d.png`,
     accentColor: '#14b8a6',
   },
@@ -20,6 +22,7 @@ const projects = [
     description: 'Ett integrerat affärssystem för caféverksamhet med realtidshantering av beställningar och lagerstatus.',
     technologies: ['React', '.NET 8', 'Supabase', 'PostgreSQL', 'Netlify', 'Tailwind CSS'],
     liveUrl: 'https://cafe45.se/',
+    // FIX: Matchar .png i din public-mapp
     image: `${base}8ebb24853f92853a4130adbef0407ff85dd7132f.png`,
     accentColor: '#14b8a6',
   },
@@ -30,7 +33,7 @@ const projects = [
     technologies: ['React', '.NET 8', 'Stripe API', 'EF Core', 'SQL Server', 'xUnit'],
     githubUrl: 'https://github.com/Alan-Ahmed/CipherStore.git',
     liveUrl: 'https://github.com/Alan-Ahmed/CipherStore.git',
-    // FIXAT NAMN: Matchar nu bdf6735...-filen i din public-mapp
+    // FIX: Matchar .png i din public-mapp
     image: `${base}bdf6735bba1dcef0595c86f23b52c98592c68f2f.png`,
     accentColor: '#14b8a6',
   },
@@ -41,7 +44,9 @@ export function Projects() {
 
   return (
     <section id="projects" ref={ref} className="relative min-h-screen h-screen py-20 px-6 bg-black flex items-center justify-center snap-start overflow-hidden">
+      {/* Bakgrundseffekt */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(20,184,166,0.03)_0%,_transparent_70%)]" />
+      
       <div className="relative max-w-7xl mx-auto w-full overflow-y-auto h-full py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
