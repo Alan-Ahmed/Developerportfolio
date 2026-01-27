@@ -26,7 +26,7 @@ export function About() {
               
               {/* Image container */}
               <div className="relative w-full h-full rounded-2xl overflow-hidden border border-teal-500/20 group-hover:border-teal-400/40 transition-colors duration-700">
-                {/* FIX: Vi använder BASE_URL och pekar på .jpg-filen i public-mappen */}
+                {/* FIX: Använder direkt sökväg till .jpg i public-mappen */}
                 <img
                   src={`${import.meta.env.BASE_URL}e8de0b64c271dbb9e4c5b70b7ecc24031de5766e.jpg`}
                   alt="Alan Ahmed - Developer portrait"
@@ -58,7 +58,7 @@ export function About() {
                 </h2>
               </div>
 
-              <h3 className="text-2xl font-semibold text-gray-200">
+              <h3 className="text-2xl font-bold text-gray-200">
                 Alan Ahmed
               </h3>
 
@@ -78,7 +78,9 @@ export function About() {
 
                 <p>
                   Just nu söker jag <span className="text-teal-400 font-semibold">LIA 2</span> där 
-                  jag kan bidra med mina kunskaper samtidigt som jag fortsätter utvecklas som utvecklare.
+                  jag kan bidra med mina kunskaper samtidigt som jag fortsätter utvecklas som utvecklare. 
+                  Jag är också öppen för en <span className="text-teal-400 font-semibold">långsiktig roll</span> där 
+                  jag kan vara med och bygga något meningsfullt från grunden.
                 </p>
               </div>
 
