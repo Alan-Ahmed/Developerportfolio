@@ -84,25 +84,27 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* NY Scroll-indikator - ligger nu utanför den relativa motion.div för bättre positionering */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer z-30 flex flex-col items-center gap-2"
-        onClick={() => scrollToSection('about')}
-      >
-        <span className="text-teal-500/40 text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
+      {/* FIXERAD Scroll-indikator */}
+      <div className="absolute bottom-12 left-0 right-0 z-50 flex justify-center pointer-events-none">
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="relative"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
+          onClick={() => scrollToSection('about')}
         >
-          {/* Pulserande cirkel bakom pilen för extra synlighet */}
-          <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-150" />
-          <ChevronDown className="w-6 h-6 text-teal-400 relative z-10" />
+          <span className="text-teal-500/60 text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
+            {/* Pulserande glöd bakom pilen */}
+            <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-150" />
+            <ChevronDown className="w-6 h-6 text-teal-400 relative z-10" strokeWidth={3} />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
