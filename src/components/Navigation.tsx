@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Home, User, Code2, Briefcase, Mail, Check } from 'lucide-react';
+import { Home, User, Code2, Briefcase, Mail } from 'lucide-react';
 
 const sections = [
   { id: 'hero', label: 'Hem', icon: Home },
@@ -16,7 +16,7 @@ export function Navigation() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-40% 0px -40% 0px', // Detekterar sektionen i mitten av skärmen
+      rootMargin: '-40% 0px -40% 0px',
       threshold: 0.1
     };
 
@@ -29,7 +29,6 @@ export function Navigation() {
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    
     sections.forEach((section) => {
       const element = document.getElementById(section.id);
       if (element) observer.observe(element);
@@ -63,24 +62,20 @@ export function Navigation() {
                 onClick={() => scrollToSection(section.id)}
                 className={`
                   relative flex items-center gap-3 px-4 py-3 md:py-2.5 rounded-xl transition-all duration-300
-                  ${isActive ? 'bg-teal-500 text-black' : 'text-gray-400 hover:bg-white/5'}
+                  ${isActive ? 'bg-teal-500 text-black shadow-[0_0_15px_rgba(20,184,166,0.4)]' : 'text-gray-400 hover:bg-white/5'}
                 `}
               >
+                {/* Endast original-ikonen visas, men blir tjockare (bold) när den är aktiv */}
                 <div className="shrink-0">
-                  {isActive ? <Check className="w-4 h-4" strokeWidth={3} /> : <Icon className="w-4 h-4" />}
+                  <Icon 
+                    className="w-4 h-4" 
+                    strokeWidth={isActive ? 3 : 2} 
+                  />
                 </div>
                 
-                {/* Text döljs på mobilen (hidden) men visas på datorn (md:block) */}
                 <span className="text-[10px] font-bold uppercase tracking-widest hidden md:block whitespace-nowrap">
                   {section.label}
                 </span>
-
-                {isActive && (
-                  <motion.div
-                    layoutId="activeBar"
-                    className="absolute right-0 w-1 h-5 bg-white rounded-l-full hidden md:block"
-                  />
-                )}
               </button>
             );
           })}
