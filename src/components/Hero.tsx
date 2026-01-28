@@ -82,23 +82,27 @@ export function Hero() {
             </div>
           </div>
         </motion.div>
-        
-        {/* Scroll-indikator längst ner */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
-          onClick={() => scrollToSection('about')}
-        >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <ChevronDown className="w-6 h-6 text-teal-500/50" />
-          </motion.div>
-        </motion.div>
       </div>
+
+      {/* NY Scroll-indikator - ligger nu utanför den relativa motion.div för bättre positionering */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer z-30 flex flex-col items-center gap-2"
+        onClick={() => scrollToSection('about')}
+      >
+        <span className="text-teal-500/40 text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="relative"
+        >
+          {/* Pulserande cirkel bakom pilen för extra synlighet */}
+          <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-150" />
+          <ChevronDown className="w-6 h-6 text-teal-400 relative z-10" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
