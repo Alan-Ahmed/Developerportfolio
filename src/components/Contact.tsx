@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useInView } from './hooks/useInView';
-import { Mail, Github, Linkedin, ArrowRight, Download } from 'lucide-react';
+import { Mail, Github, Linkedin, ArrowRight } from 'lucide-react';
 
 export function Contact() {
   const { ref, isInView } = useInView({ threshold: 0.2 });
@@ -30,16 +30,21 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" ref={ref} className="relative min-h-screen py-20 px-6 bg-gradient-to-b from-black via-[#0a0a0a] to-black overflow-hidden flex items-center justify-center snap-start">
+    <section 
+      id="contact" 
+      ref={ref} 
+      // ÄNDRING: Bytt h-screen mot min-h-screen för mobilvänlighet
+      className="relative min-h-screen py-24 px-6 bg-gradient-to-b from-black via-[#0a0a0a] to-black overflow-hidden flex items-center justify-center snap-start"
+    >
       {/* Subtle background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(20,184,166,0.04)_0%,_transparent_70%)]" />
 
-      <div className="relative max-w-4xl mx-auto w-full">
+      <div className="relative max-w-4xl mx-auto w-full z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ width: 0 }}
@@ -53,14 +58,15 @@ export function Contact() {
           <p className="text-lg text-gray-300 mb-2">
             Söker LIA 2 eller en långsiktig roll
           </p>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm">
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm px-4">
             Jag är öppen för möjligheter där jag kan bidra med mina kunskaper 
             och samtidigt fortsätta växa som utvecklare. Hör gärna av dig!
           </p>
         </motion.div>
 
         {/* Contact cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {/* ÄNDRING: Säkerställt att grid staplas (1 kolumn) på mobil och blir 3 på desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
           {contactLinks.map((link, index) => {
             const Icon = link.icon;
             return (
@@ -79,18 +85,18 @@ export function Contact() {
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/15 to-transparent rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 
                 {/* Card */}
-                <div className="relative p-4 bg-gradient-to-br from-[#0f0f0f] to-[#0a0a0a] rounded-xl border border-teal-500/20 group-hover:border-teal-400/40 transition-all duration-700 h-[90px]">
-                  <div className="flex items-center gap-3 h-full">
-                    <div className="p-2 bg-teal-500/10 rounded-lg group-hover:bg-teal-500/15 transition-colors duration-500">
+                <div className="relative p-5 bg-gradient-to-br from-[#0f0f0f] to-[#0a0a0a] rounded-xl border border-teal-500/20 group-hover:border-teal-400/40 transition-all duration-700 h-full min-h-[90px]">
+                  <div className="flex items-center gap-4 h-full">
+                    <div className="p-2 bg-teal-500/10 rounded-lg group-hover:bg-teal-500/15 transition-colors duration-500 shrink-0">
                       <Icon className="w-5 h-5 text-teal-400" strokeWidth={2} />
                     </div>
                     <div className="flex-1 text-left min-w-0">
-                      <p className="text-xs text-gray-400 mb-1">{link.name}</p>
-                      <p className="text-sm text-gray-200 font-medium group-hover:text-teal-400 transition-colors duration-500">
+                      <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1">{link.name}</p>
+                      <p className="text-sm text-gray-200 font-medium group-hover:text-teal-400 transition-colors duration-500 truncate">
                         {link.value}
                       </p>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-teal-400 opacity-0 group-hover:opacity-100 transition-all duration-500 shrink-0" />
                   </div>
                 </div>
               </motion.a>
@@ -105,9 +111,9 @@ export function Contact() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center"
         >
-          <div className="h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent mb-4" />
-          <p className="text-gray-500 text-sm">
-            © 2026 Alan Ahmed. Byggd med passion för clean code.
+          <div className="h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent mb-6" />
+          <p className="text-gray-500 text-xs tracking-wide">
+            © 2026 ALAN AHMED • BYGGD MED PASSION FÖR CLEAN CODE
           </p>
         </motion.div>
       </div>
