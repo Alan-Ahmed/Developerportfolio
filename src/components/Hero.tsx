@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 
 export function Hero() {
   const scrollToSection = (id: string) => {
@@ -10,11 +9,13 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative h-[100dvh] w-full flex items-center justify-center bg-black overflow-hidden">
-      {/* 1. Bakgrund - Ligger helt i botten */}
+    /* ÄNDRING: min-h-screen istället för h-[100dvh] och py-12 för att 
+       minska det tomma utrymmet i botten */
+    <section id="hero" className="relative min-h-[85dvh] flex items-center justify-center overflow-hidden bg-black py-12">
+      {/* 1. Bakgrund */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)] z-0" />
       
-      {/* 2. Innehållskontainer - Denna sköter centreringen av boxen mitt på skärmen */}
+      {/* 2. Innehållskontainer */}
       <div className="relative z-10 text-center px-6 w-full max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -22,7 +23,6 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative"
         >
-          {/* Glow bakom huvudboxen */}
           <div className="absolute inset-0 bg-teal-500/5 blur-[100px] rounded-full" />
           
           <div className="relative bg-black/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 md:p-16 shadow-2xl">
@@ -85,27 +85,6 @@ export function Hero() {
               </motion.div>
             </div>
           </div>
-        </motion.div>
-      </div>
-
-      {/* 3. Scroll-indikator - TVINGAD till botten med 'absolute bottom-8' */}
-      <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="flex flex-col items-center gap-1 cursor-pointer pointer-events-auto"
-          onClick={() => scrollToSection('about')}
-        >
-          <span className="text-teal-500/40 text-[9px] uppercase tracking-[0.4em] font-bold hidden md:block">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ChevronDown className="w-6 h-6 text-teal-400" strokeWidth={3} />
-          </motion.div>
         </motion.div>
       </div>
     </section>
