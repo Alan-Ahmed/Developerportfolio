@@ -7,24 +7,24 @@ import { Navigation } from './components/Navigation';
 
 export default function App() {
   return (
-    /* 1. Vi använder 'min-h-screen' istället för 'h-screen' för att tillåta innehåll att växa.
-      2. 'snap-proximity' på mobil gör att användaren kan skrolla fritt i långa texter.
-      3. 'md:snap-mandatory' behåller din snygga desktop-känsla.
-    */
-    <div className="min-h-screen w-full overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth bg-black text-white">
+    /* Vi tar bort snap-y och h-screen för att låta användaren skrolla helt fritt 
+       och för att sektionerna ska kunna ligga tätare. */
+    <div className="min-h-screen w-full bg-black text-white selection:bg-teal-500/30">
       
-      {/* Navigationen ligger fast (fixed) */}
       <Navigation />
 
-      {/* Varje sektion bör ha 'min-h-screen' och 'snap-start' inuti sin egen komponent.
-        Jag har lagt dem direkt här för att minimera risken för layout-skiftningar.
-      */}
-      <main>
+      <main className="flex flex-col w-full">
+        {/* Hero-sektionen får behålla sin höjd men utan scroll-pilen */}
         <Hero />
-        <About />
-        <TechStack />
-        <Projects />
-        <Contact />
+        
+        {/* Vi omsluter resten i en container med negativt mellanrum 
+            om du vill tvinga dem ännu närmare varandra */}
+        <div className="flex flex-col">
+          <About />
+          <TechStack />
+          <Projects />
+          <Contact />
+        </div>
       </main>
       
     </div>
