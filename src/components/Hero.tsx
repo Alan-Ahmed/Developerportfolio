@@ -15,12 +15,12 @@ export function Hero() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)]" />
       
       {/* Innehållskontainer */}
-      <div className="relative z-10 text-center px-6 w-full max-w-5xl mx-auto">
+      <div className="relative z-10 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center justify-center h-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative"
+          className="relative w-full"
         >
           {/* Glow bakom huvudboxen */}
           <div className="absolute inset-0 bg-teal-500/5 blur-[100px] rounded-full" />
@@ -63,7 +63,6 @@ export function Hero() {
                 </p>
               </div>
               
-              {/* Knappar */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -84,31 +83,31 @@ export function Hero() {
                   Kontakta mig
                 </button>
               </motion.div>
-
-              {/* FLYTTAD: Scroll-indikator direkt under knapparna */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 1 }}
-                className="pt-8 md:pt-12 flex flex-col items-center gap-2 cursor-pointer group"
-                onClick={() => scrollToSection('about')}
-              >
-                <span className="text-teal-500/40 text-[10px] uppercase tracking-[0.3em] font-bold hidden md:block group-hover:text-teal-400 transition-colors">
-                  Scroll
-                </span>
-                
-                <motion.div
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative"
-                >
-                  <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-125 md:scale-150" />
-                  <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-teal-400 relative z-10" strokeWidth={3} />
-                </motion.div>
-              </motion.div>
-
             </div>
           </div>
+        </motion.div>
+      </div>
+
+      {/* FLYTTAD: Nu ligger denna helt utanför boxen, i botten av sektionen */}
+      <div className="absolute bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="flex flex-col items-center gap-1 cursor-pointer pointer-events-auto"
+          onClick={() => scrollToSection('about')}
+        >
+          {/* Text döljs på mobil för att inte ta plats */}
+          <span className="text-teal-500/40 text-[9px] uppercase tracking-[0.4em] font-bold hidden md:block">
+            Scroll
+          </span>
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+          >
+            <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-teal-400" strokeWidth={3} />
+          </motion.div>
         </motion.div>
       </div>
     </section>
