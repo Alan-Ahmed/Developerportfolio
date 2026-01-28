@@ -10,17 +10,17 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-black py-12">
-      {/* Bakgrundseffekter */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)]" />
+    <section id="hero" className="relative h-[100dvh] w-full flex items-center justify-center bg-black overflow-hidden">
+      {/* 1. Bakgrund - Ligger helt i botten */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)] z-0" />
       
-      {/* Innehållskontainer */}
-      <div className="relative z-10 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center justify-center h-full">
+      {/* 2. Innehållskontainer - Denna sköter centreringen av boxen mitt på skärmen */}
+      <div className="relative z-10 text-center px-6 w-full max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full"
+          className="relative"
         >
           {/* Glow bakom huvudboxen */}
           <div className="absolute inset-0 bg-teal-500/5 blur-[100px] rounded-full" />
@@ -88,8 +88,8 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* FLYTTAD: Nu ligger denna helt utanför boxen, i botten av sektionen */}
-      <div className="absolute bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      {/* 3. Scroll-indikator - TVINGAD till botten med 'absolute bottom-8' */}
+      <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -97,16 +97,14 @@ export function Hero() {
           className="flex flex-col items-center gap-1 cursor-pointer pointer-events-auto"
           onClick={() => scrollToSection('about')}
         >
-          {/* Text döljs på mobil för att inte ta plats */}
           <span className="text-teal-500/40 text-[9px] uppercase tracking-[0.4em] font-bold hidden md:block">
             Scroll
           </span>
           <motion.div
-            animate={{ y: [0, 5, 0] }}
+            animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
           >
-            <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-teal-400" strokeWidth={3} />
+            <ChevronDown className="w-6 h-6 text-teal-400" strokeWidth={3} />
           </motion.div>
         </motion.div>
       </div>
