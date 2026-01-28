@@ -7,22 +7,25 @@ import { Navigation } from './components/Navigation';
 
 export default function App() {
   return (
-    /* FIX: Vi använder 100dvh (dynamic viewport height) för att 
-      säkerställa att botten inte klipps av på mobiler med sökfält. 
+    /* 1. Vi använder 'min-h-screen' istället för 'h-screen' för att tillåta innehåll att växa.
+      2. 'snap-proximity' på mobil gör att användaren kan skrolla fritt i långa texter.
+      3. 'md:snap-mandatory' behåller din snygga desktop-känsla.
     */
-    <div className="h-screen w-full overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth bg-black text-white">
+    <div className="min-h-screen w-full overflow-y-auto overflow-x-hidden snap-y snap-proximity md:snap-mandatory scroll-smooth bg-black text-white">
       
-      {/* Navigationen är fast (fixed) och påverkas inte av scrollen */}
+      {/* Navigationen ligger fast (fixed) */}
       <Navigation />
 
-      {/* Här tar vi bort onödiga main-wrappers som kan störa snap-positionering. 
-        Varje komponent sköter sin egen snap-start.
+      {/* Varje sektion bör ha 'min-h-screen' och 'snap-start' inuti sin egen komponent.
+        Jag har lagt dem direkt här för att minimera risken för layout-skiftningar.
       */}
-      <Hero />
-      <About />
-      <TechStack />
-      <Projects />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <TechStack />
+        <Projects />
+        <Contact />
+      </main>
       
     </div>
   );
