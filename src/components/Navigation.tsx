@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Home, User, Code2, Briefcase, Mail, Check } from 'lucide-react';
 
 const sections = [
@@ -14,133 +14,116 @@ export function Navigation() {
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    // Use Intersection Observer for accurate section detection
     const observerOptions = {
       root: null,
-      rootMargin: '0px 0px -50% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1]
+      rootMargin: '-20% 0px -20% 0px', // Justerad marginal för bättre detektering
+      threshold: 0.5
     };
-
-    let currentSection = 'hero';
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          currentSection = entry.target.id;
-          setActiveSection(currentSection);
-          console.log('Active section:', currentSection); // Debug
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
         }
       });
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Observe all sections
-    const sectionIds = ['hero', 'about', 'tech', 'projects', 'contact'];
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
+    sections.forEach((section) => {
+      const element = document.getElementById(section.id);
+      if (element) observer.observe(element);
     });
 
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Offset för att inte landa precis under navbaren på mobilen
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = element.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
     <motion.nav
-      initial={{ opacity: 0, x: -100 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut', delay: 1 }}
-      className="fixed top-1/2 -translate-y-1/2 left-6 z-50"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 1 }}
+      /* MOBIL: Ligger i botten, full bredd. 
+         DATOR: Ligger till vänster, centrerad vertikalt. 
+      */
+      className="fixed bottom-4 left-0 right-0 px-4 md:left-6 md:right-auto md:top-1/2 md:-translate-y-1/2 md:bottom-auto z-[100]"
     >
-      {/* Navigation container - compact and always showing labels */}
-      <div className="relative">
-        {/* Subtle glow */}
-        <div className="absolute inset-0 bg-teal-500/10 rounded-xl blur-lg" />
+      <div className="relative max-w-md mx-auto md:max-w-none">
+        {/* Glow bakom menyn */}
+        <div className="absolute inset-0 bg-teal-500/10 rounded-2xl blur-xl" />
         
-        {/* Nav card */}
-        <div className="relative bg-black/95 backdrop-blur-md rounded-xl border border-teal-500/20 overflow-hidden shadow-2xl">
-          <div className="p-2 space-y-1">
+        <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+          <div className="flex flex-row md:flex-col p-2 gap-1 md:gap-2 justify-around md:justify-start">
             {sections.map((section) => {
               const Icon = section.icon;
               const isActive = activeSection === section.id;
 
               return (
-                <motion.button
+                <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
-                  whileHover={{ x: 4, scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
                   className={`
-                    group relative w-full flex items-center gap-2 px-3 py-2 rounded-lg
-                    transition-all duration-500
-                    ${isActive 
-                      ? 'bg-teal-500 text-white shadow-[0_0_15px_rgba(20,184,166,0.4)]' 
-                      : 'text-gray-400 hover:text-teal-400 hover:bg-teal-500/10'
-                    }
+                    relative flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 py-2 md:px-4 md:py-3 rounded-xl
+                    transition-all duration-300 group flex-1 md:flex-none
+                    ${isActive ? 'text-teal-400' : 'text-gray-500 hover:text-gray-300'}
                   `}
                 >
-                  {/* Icon */}
-                  <motion.div 
-                    className="shrink-0"
-                    whileHover={{ scale: 1.1, rotate: 3 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  >
-                    {isActive ? (
-                      <Check className="w-4 h-4" strokeWidth={3} />
-                    ) : (
-                      <Icon className="w-4 h-4" strokeWidth={2} />
-                    )}
-                  </motion.div>
+                  {/* Aktiv bakgrunds-pill */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navPill"
+                      className="absolute inset-0 bg-teal-500/10 rounded-xl border border-teal-500/20"
+                      transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
 
-                  {/* Label - always visible */}
-                  <span className={`text-xs font-semibold whitespace-nowrap ${isActive ? 'font-bold' : ''}`}>
+                  <div className="relative z-10">
+                    {isActive ? (
+                      <Check className="w-4 h-4 md:w-5 md:h-5" strokeWidth={3} />
+                    ) : (
+                      <Icon className="w-4 h-4 md:w-5 md:h-5" strokeWidth={2} />
+                    )}
+                  </div>
+
+                  <span className="relative z-10 text-[10px] md:text-xs font-bold uppercase tracking-widest hidden sm:block">
                     {section.label}
                   </span>
 
-                  {/* Active indicator - stripe on right */}
+                  {/* Desktop-enbart: Indikator på höger sida */}
                   {isActive && (
                     <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute right-0 w-1 h-6 bg-white rounded-l-full"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      layoutId="activeBar"
+                      className="absolute right-0 w-1 h-6 bg-teal-500 rounded-l-full hidden md:block"
                     />
                   )}
-                  
-                  {/* Hover glow effect - only for inactive items */}
-                  {!isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-lg bg-teal-500/0 blur-sm -z-10"
-                      whileHover={{ 
-                        backgroundColor: 'rgba(20, 184, 166, 0.15)',
-                        scale: 1.05
-                      }}
-                      transition={{ duration: 0.5 }}
-                    />
-                  )}
-                </motion.button>
+                </button>
               );
             })}
           </div>
 
-          {/* Progress bar at bottom */}
-          <div className="h-1 bg-[#0a0a0a]/80">
+          {/* Progress bar som visar hur långt man scrollat */}
+          <div className="h-[2px] bg-white/5 w-full">
             <motion.div
-              className="h-full bg-gradient-to-r from-teal-500 to-cyan-500"
-              style={{
+              className="h-full bg-teal-500"
+              animate={{
                 width: `${((sections.findIndex(s => s.id === activeSection) + 1) / sections.length) * 100}%`
               }}
-              transition={{ duration: 0.5 }}
             />
           </div>
         </div>
