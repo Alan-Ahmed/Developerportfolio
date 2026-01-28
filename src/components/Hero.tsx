@@ -10,7 +10,7 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative h-[100dvh] flex items-center justify-center overflow-hidden bg-black">
+    <section id="hero" className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-black py-12">
       {/* Bakgrundseffekter */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)]" />
       
@@ -30,40 +30,45 @@ export function Hero() {
             <div className="absolute top-0 left-0 w-8 h-8 border-l border-t border-teal-500/30 rounded-tl-3xl" />
             <div className="absolute bottom-0 right-0 w-8 h-8 border-r border-b border-teal-500/30 rounded-br-3xl" />
             
-            <div className="space-y-6">
-              <motion.h1 
-                className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-              >
-                <span className="bg-gradient-to-r from-teal-400 via-teal-200 to-cyan-400 bg-clip-text text-transparent">
-                  Alan Ahmed
-                </span>
-              </motion.h1>
+            <div className="space-y-6 md:space-y-8">
+              <div>
+                <motion.h1 
+                  className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tighter"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                >
+                  <span className="bg-gradient-to-r from-teal-400 via-teal-200 to-cyan-400 bg-clip-text text-transparent">
+                    Alan Ahmed
+                  </span>
+                </motion.h1>
+                
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="mt-4"
+                >
+                  <h2 className="text-lg md:text-3xl text-gray-400 font-light tracking-widest uppercase">
+                    Fullstack Developer <span className="text-teal-500 font-bold">.NET</span>
+                  </h2>
+                </motion.div>
+              </div>
               
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-              >
-                <h2 className="text-lg md:text-3xl text-gray-400 font-light tracking-widest uppercase">
-                  Fullstack Developer <span className="text-teal-500 font-bold">.NET</span>
-                </h2>
-                
-                <div className="h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent my-6 md:my-8" />
-                
-                <p className="text-sm md:text-lg text-gray-400 max-w-xl mx-auto leading-relaxed italic px-2">
+              <div className="max-w-xl mx-auto">
+                <div className="h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent mb-6 md:mb-8" />
+                <p className="text-sm md:text-lg text-gray-400 leading-relaxed italic px-2">
                   "Jag bygger robusta system med clean architecture och skalbar backend. 
                   Driven av att leverera lösningar som håller över tid."
                 </p>
-              </motion.div>
+              </div>
               
+              {/* Knappar */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 md:pt-6"
+                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               >
                 <button
                   onClick={() => scrollToSection('projects')}
@@ -79,33 +84,31 @@ export function Hero() {
                   Kontakta mig
                 </button>
               </motion.div>
+
+              {/* FLYTTAD: Scroll-indikator direkt under knapparna */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 1 }}
+                className="pt-8 md:pt-12 flex flex-col items-center gap-2 cursor-pointer group"
+                onClick={() => scrollToSection('about')}
+              >
+                <span className="text-teal-500/40 text-[10px] uppercase tracking-[0.3em] font-bold hidden md:block group-hover:text-teal-400 transition-colors">
+                  Scroll
+                </span>
+                
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative"
+                >
+                  <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-125 md:scale-150" />
+                  <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-teal-400 relative z-10" strokeWidth={3} />
+                </motion.div>
+              </motion.div>
+
             </div>
           </div>
-        </motion.div>
-      </div>
-
-      {/* FIXERAD Scroll-indikator - Mobiloptimerad */}
-      <div className="absolute bottom-6 md:bottom-12 left-0 right-0 z-50 flex justify-center pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
-          onClick={() => scrollToSection('about')}
-        >
-          {/* Text döljs på mobil för att inte täcka innehåll */}
-          <span className="text-teal-500/60 text-[10px] uppercase tracking-[0.3em] font-bold hidden md:block">
-            Scroll
-          </span>
-          
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-teal-500/20 rounded-full blur-md animate-pulse scale-125 md:scale-150" />
-            <ChevronDown className="w-5 h-5 md:w-6 md:h-6 text-teal-400 relative z-10" strokeWidth={3} />
-          </motion.div>
         </motion.div>
       </div>
     </section>
