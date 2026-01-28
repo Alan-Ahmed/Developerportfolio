@@ -9,20 +9,19 @@ export function Hero() {
   };
 
   return (
-    /* ÄNDRING: min-h-screen istället för h-[100dvh] och py-12 för att 
-       minska det tomma utrymmet i botten */
-    <section id="hero" className="relative min-h-[85dvh] flex items-center justify-center overflow-hidden bg-black py-12">
-      {/* 1. Bakgrund */}
+    <section id="hero" className="relative min-h-[80dvh] flex items-center justify-center overflow-hidden bg-black py-12">
+      {/* 1. Bakgrundseffekter */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(20,184,166,0.1)_0%,_transparent_50%)] z-0" />
       
       {/* 2. Innehållskontainer */}
-      <div className="relative z-10 text-center px-6 w-full max-w-5xl">
+      <div className="relative z-10 text-center px-6 w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative"
+          className="relative w-full"
         >
+          {/* Glow bakom huvudboxen */}
           <div className="absolute inset-0 bg-teal-500/5 blur-[100px] rounded-full" />
           
           <div className="relative bg-black/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 md:p-16 shadow-2xl">
@@ -63,6 +62,7 @@ export function Hero() {
                 </p>
               </div>
               
+              {/* Knappar */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
